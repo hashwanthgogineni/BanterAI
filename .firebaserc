@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "fir-test-2d6e8"
+  },
+  "targets": {
+    "fir-test-2d6e8": {
+      "hosting": {
+        "banter-ai": [
+          "banter-ai"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
