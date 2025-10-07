@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# 🤖 Banter AI  
+> *“Banter protocol online. Awaiting chaos.”*  
 
-## Project info
+Meet **Banter AI** — your slightly unhinged, sarcasm-fueled conversationalist.  
+It doesn’t just chat; it *roasts*, *flirts*, and *philosophizes* on command.  
+Built for those who think small talk is a waste of neural compute.  
 
-**URL**: https://lovable.dev/projects/27d2a971-a7a9-416b-878e-b8b7058a1223
+---
 
-## How can I edit this code?
+## ⚙️ Tech Stack  
+🧠 **Brain:** DeepSeek R1 via Hugging Face API  
+🎨 **Face:** React + Vite + Tailwind CSS + shadcn/ui  
+💾 **Memory:** Firebase Firestore  
+🔐 **Auth:** Firebase Authentication (Email + Google)  
+☁️ **Hosting:** Firebase Hosting  
+🔌 **Backbone:** TypeScript + Node.js  
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 💡 What Makes Banter AI Tick  
+- 🗣 **Chaotic Good Conversationalist** — responds with wit, sass, and unnerving accuracy.  
+- 🎭 **Anonymous Expression** — say what you can’t on LinkedIn.  
+- ⚡ **Built on Vite** — because waiting for builds is so 2020.  
+- 🌈 **Dark-Neon Aesthetic** — sleek, glowing, hacker-vibes with green (#26AF00).  
+- 🧩 **Customizable Personality** — tune its sarcasm level like a thermostat.  
+- 🌍 **Deploy Anywhere** — it’s more flexible than your dev schedule.  
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/27d2a971-a7a9-416b-878e-b8b7058a1223) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Quick Start  
 
-**Use your preferred IDE**
+```bash
+# 1. Clone this chaotic masterpiece
+git clone https://github.com/hashwanthgogineni/BanterAI.git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+cd BanterAI
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 2. Summon dependencies
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 3. Awaken the bot
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+# 4. Build for the real world
+npm run build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/27d2a971-a7a9-416b-878e-b8b7058a1223) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+# 5. Deploy (and prepare for judgment)
+# Vercel / Firebase / Render — pick your battlefield
