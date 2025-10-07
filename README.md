@@ -8,7 +8,7 @@ Built for those who think small talk is a waste of neural compute.
 ---
 
 ## ⚙️ Tech Stack  
-🧠 **Brain:** DeepSeek R1
+🧠 **Brain:** DeepSeek R1  
 🎨 **Face:** React + Vite + Tailwind CSS + shadcn/ui  
 💾 **Memory:** Firebase Firestore  
 🔐 **Auth:** Firebase Authentication (Email + Google)  
