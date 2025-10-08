@@ -2,8 +2,10 @@
 > *“Banter protocol online. Awaiting chaos.”*  
 
 Meet **Banter AI** — your slightly unhinged, sarcasm-fueled conversationalist.  
-It doesn’t just chat; it *roasts*, *flirts*, and *philosophizes* on command.  
+It doesn't just chat; it *roasts*, *flirts*, and *philosophizes* on command.  
 Built for those who think small talk is a waste of neural compute.  
+
+🌐 **Live Demo:** [https://banter-ai.web.app/](https://banter-ai.web.app/)
 
 ---
 
@@ -26,23 +28,3 @@ Built for those who think small talk is a waste of neural compute.
 - 🌍 **Deploy Anywhere** — it’s more flexible than your dev schedule.  
 
 ---
-
-## 🚀 Quick Start  
-
-```bash
-# 1. Clone this chaotic masterpiece
-git clone https://github.com/hashwanthgogineni/BanterAI.git
-
-cd BanterAI
-
-# 2. Summon dependencies
-npm install
-
-# 3. Awaken the bot
-npm run dev
-
-# 4. Build for the real world
-npm run build
-
-# 5. Deploy (and prepare for judgment)
-# Vercel / Firebase / Render — pick your battlefield
