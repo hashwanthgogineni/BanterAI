@@ -27,10 +27,10 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="bg-background">
-      <div className="container mx-auto px-4 py-4 max-w-4xl">
+    <div className="bg-background border-t border-border/50 safe-area-pb">
+      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-4xl">
         <form onSubmit={handleSubmit} className="relative">
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-2 sm:gap-3 items-end">
             <div className="flex-1 relative">
               <Textarea
                 value={input}
@@ -38,7 +38,7 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
                 onKeyDown={handleKeyDown}
                 placeholder="Got questions? I've got attitude."
                 disabled={disabled}
-                className="min-h-[56px] max-h-[200px] resize-none pr-12 rounded-2xl bg-card border border-border/50 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-border/50"
+                className="min-h-[48px] sm:min-h-[56px] max-h-[120px] sm:max-h-[200px] resize-none pr-10 sm:pr-12 rounded-xl sm:rounded-2xl bg-card border border-border/50 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-border/50 text-sm sm:text-base"
                 rows={1}
               />
             </div>
@@ -48,9 +48,9 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
               size="icon"
               variant="ghost"
               disabled={!input.trim() || disabled}
-              className="h-12 w-12 shrink-0 hover:bg-transparent"
+              className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 hover:bg-transparent"
             >
-              <Send className="h-6 w-6 text-primary" />
+              <Send className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
             </Button>
           </div>
         </form>

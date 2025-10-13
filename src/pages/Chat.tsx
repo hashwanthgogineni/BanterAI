@@ -130,7 +130,7 @@ const Chat = () => {
   // No authentication blocking - always show the chat interface
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen mobile-chat-container">
       <ChatHeader 
         onLogout={handleLogout} 
         onLogin={handleLogin}
@@ -142,7 +142,9 @@ const Chat = () => {
         <ChatMessages messages={messages} loading={loading} />
       </div>
 
-      <ChatInput onSendMessage={handleSendMessage} disabled={loading} />
+      <div className="flex-shrink-0">
+        <ChatInput onSendMessage={handleSendMessage} disabled={loading} />
+      </div>
     </div>
   );
 };

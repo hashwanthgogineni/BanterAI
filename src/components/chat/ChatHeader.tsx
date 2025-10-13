@@ -10,20 +10,17 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ onLogout, onLogin, userEmail, isAuthenticated }: ChatHeaderProps) => {
   return (
-    <header className="border-b border-border bg-card/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+    <header className="border-b border-border bg-card/50 backdrop-blur-sm safe-area-pt">
+      <div className="container mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-xl sm:text-2xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             Banter AI
           </h1>
-          {/* <span className="text-sm text-muted-foreground hidden md:inline">
-            ✨ Witty & Sarcastic
-          </span> */}
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {isAuthenticated && userEmail && (
-            <span className="text-sm text-muted-foreground hidden sm:inline">
+            <span className="text-xs sm:text-sm text-muted-foreground hidden sm:inline">
               {userEmail}
             </span>
           )}
@@ -31,17 +28,17 @@ const ChatHeader = ({ onLogout, onLogin, userEmail, isAuthenticated }: ChatHeade
             variant="ghost"
             size="sm"
             onClick={isAuthenticated ? onLogout : onLogin}
-            className="gap-2"
+            className="gap-1 sm:gap-2 h-8 sm:h-9 px-2 sm:px-3"
           >
             {isAuthenticated ? (
               <>
-                <LogOut className="h-4 w-4" />
-                <span className="hidden sm:inline">Sign out</span>
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline text-xs sm:text-sm">Sign out</span>
               </>
             ) : (
               <>
-                <LogIn className="h-4 w-4" />
-                <span className="hidden sm:inline">Login</span>
+                <LogIn className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline text-xs sm:text-sm">Login</span>
               </>
             )}
           </Button>
