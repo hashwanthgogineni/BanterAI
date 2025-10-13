@@ -26,14 +26,13 @@ const Chat = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Optional: Load chat history if user is authenticated (keeping auth code intact)
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/auth");
-    } else if (user) {
+    if (user) {
       // Load recent chat history when user is authenticated
       loadChatHistory();
     }
-  }, [user, authLoading, navigate]);
+  }, [user]);
 
   const loadChatHistory = async () => {
     if (!user) return;
@@ -47,24 +46,25 @@ const Chat = () => {
   };
 
   const handleSendMessage = async (content: string) => {
-    if (!content.trim() || !user) return;
+    if (!content.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: content.trim(),
       timestamp: new Date(),
-      userId: user.uid,
+      userId: user?.uid || "anonymous",
     };
 
     // Add user message to UI immediately
     setMessages((prev) => [...prev, userMessage]);
     
-    // Save user prompt for learning
-    await saveUserPrompt(user.uid, content.trim());
-    
-    // Save user message to Firestore
-    await saveChatMessage(user.uid, userMessage);
+    // Save user prompt for learning (only if user is authenticated)
+    if (user) {
+      await saveUserPrompt(user.uid, content.trim());
+      // Save user message to Firestore
+      await saveChatMessage(user.uid, userMessage);
+    }
     
     setLoading(true);
 
@@ -77,14 +77,16 @@ const Chat = () => {
         role: "assistant",
         content: reply,
         timestamp: new Date(),
-        userId: user.uid,
+        userId: user?.uid || "anonymous",
       };
 
       // Add assistant message to UI
       setMessages((prev) => [...prev, assistantMessage]);
       
-      // Save assistant message to Firestore
-      await saveChatMessage(user.uid, assistantMessage);
+      // Save assistant message to Firestore (only if user is authenticated)
+      if (user) {
+        await saveChatMessage(user.uid, assistantMessage);
+      }
       
     } catch (error: any) {
       console.error("DeepSeek call failed:", error);
@@ -97,11 +99,14 @@ const Chat = () => {
         role: "assistant",
         content: fallbackReply,
         timestamp: new Date(),
-        userId: user.uid,
+        userId: user?.uid || "anonymous",
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
-      await saveChatMessage(user.uid, assistantMessage);
+      // Save assistant message to Firestore (only if user is authenticated)
+      if (user) {
+        await saveChatMessage(user.uid, assistantMessage);
+      }
       
       toast({
         title: "Connection Issue",
@@ -118,7 +123,12 @@ const Chat = () => {
     navigate("/auth");
   };
 
-  if (authLoading || !user) {
+  const handleLogin = () => {
+    navigate("/auth");
+  };
+
+  // Remove authentication requirement - show loading only if auth is still loading
+  if (authLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
@@ -131,7 +141,12 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <ChatHeader onLogout={handleLogout} userEmail={user.email} />
+      <ChatHeader 
+        onLogout={handleLogout} 
+        onLogin={handleLogin}
+        userEmail={user?.email} 
+        isAuthenticated={!!user}
+      />
       
       <div className="flex-1 overflow-hidden">
         <ChatMessages messages={messages} loading={loading} />
