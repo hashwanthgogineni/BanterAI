@@ -20,7 +20,8 @@ import { useToast } from "@/hooks/use-toast";
 export type Message = ChatMessage;
 
 const Chat = () => {
-  const { user, loading: authLoading } = useAuth();
+  // Make authentication completely optional - don't block the UI
+  const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -127,17 +128,7 @@ const Chat = () => {
     navigate("/auth");
   };
 
-  // Remove authentication requirement - show loading only if auth is still loading
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // No authentication blocking - always show the chat interface
 
   return (
     <div className="flex flex-col h-screen">

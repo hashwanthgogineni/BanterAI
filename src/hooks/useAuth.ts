@@ -4,7 +4,7 @@ import { onAuthChange, getCurrentUser } from '@/integrations/firebase/auth';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Don't block UI with loading
 
   useEffect(() => {
     const unsubscribe = onAuthChange((user) => {
