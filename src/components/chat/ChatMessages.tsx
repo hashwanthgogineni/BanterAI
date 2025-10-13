@@ -24,9 +24,10 @@ const ChatMessages = ({ messages, loading }: ChatMessagesProps) => {
           <p className="text-muted-foreground text-lg">
             Banter protocol online. Awaiting chaos.
           </p>
-          {/* <p className="text-sm text-muted-foreground/70">
-            I promise to be clever, sarcastic, and occasionally brilliant 😏
-          </p> */}
+          <div className="text-xs text-muted-foreground/60 max-w-md mx-auto mt-4 p-3 bg-muted/20 rounded-lg border border-muted/30">
+            <p className="font-medium mb-1">⚠️ AI Disclaimer</p>
+            <p>This AI may provide inaccurate, biased, or inappropriate responses. Use at your own discretion.</p>
+          </div>
         </div>
       </div>
     );
