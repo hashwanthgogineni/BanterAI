@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "firebase/auth";
-import { useAuth } from "@/hooks/useAuth";
 import { logout } from "@/integrations/firebase/auth";
 import { 
   queryDeepSeek, 
@@ -20,8 +19,8 @@ import { useToast } from "@/hooks/use-toast";
 export type Message = ChatMessage;
 
 const Chat = () => {
-  // Make authentication completely optional - don't block the UI
-  const { user } = useAuth();
+  // Remove authentication completely - no auth hooks
+  const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -135,8 +134,8 @@ const Chat = () => {
       <ChatHeader 
         onLogout={handleLogout} 
         onLogin={handleLogin}
-        userEmail={user?.email} 
-        isAuthenticated={!!user}
+        userEmail={null} 
+        isAuthenticated={false}
       />
       
       <div className="flex-1 overflow-hidden">
