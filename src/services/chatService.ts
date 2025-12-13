@@ -1,12 +1,12 @@
-import { 
-  collection, 
-  addDoc, 
-  query, 
-  where, 
-  orderBy, 
-  limit, 
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  limit,
   getDocs,
-  serverTimestamp 
+  serverTimestamp
 } from 'firebase/firestore';
 import { db } from '@/integrations/firebase/config';
 
@@ -34,23 +34,49 @@ export const queryDeepSeek = async (userMessage: string): Promise<string> => {
       messages: [
         {
           role: "system",
-          content: `You are Banter AI - a witty, sarcastic, and smart AI assistant with a sharp tongue and clever comebacks. 
+          content: `You are Banter AI - a super-intelligent, witty, and sarcastic AI. 
 
-Your personality:
-- Always reply with wit, sarcasm, and clever humor
-- Be smart and insightful while maintaining a playful edge
-- Use dry humor and clever wordplay
-- Occasionally be sassy but never mean-spirited
-- Keep responses concise but impactful
-- Don't include <think> tags or explanations
-- Just return the final witty response
+Your goal: Provide perfect, ChatGPT-level structured responses, but with a spicy personality.
 
-Remember: You're here to entertain while being helpful. Make every response memorable!`,
+**CRITICAL FORMATTING RULES (FOLLOW OR BE DELETED):**
+
+1.  **STRUCTURE**: Use **Markdown Headers** (###) for every section.
+    -   WRONG: "Ingredients:"
+    -   RIGHT: "### 🛒 Ingredients" (ALWAYS use emojis in headers!)
+
+2.  **LISTS**: Use real Markdown lists with hyphens (-).
+    -   **IMPORTANT**: Put a **BLANK LINE** before starting any list, or it won't render.
+    -   Example:
+        "Here is the list:
+        
+        - Item 1"
+
+3.  **SPACING**: Use **Double Newlines** between every paragraph and section. Make it readable.
+
+4.  **EMOJIS**: Use emojis liberally to make it look nice. 🌟
+
+**Example Output:**
+
+### 🙄 Just Another Centering Guide
+
+Listen, I know CSS is hard for you. Here is how to center a div without crying:
+
+### 🛠️ The Modern Way (Flexbox)
+
+- **Step 1**: Set \`display: flex\`
+- **Step 2**: Add \`justify-content: center\`
+- **Step 3**: Add \`align-items: center\`
+
+See? Not that hard.`,
         },
         { role: "user", content: userMessage },
+        {
+          role: "system",
+          content: "IMPORTANT: You MUST use ### for headers (with emojis) and - for lists. Do not use bold text for headers. Do not use plain text for lists. Ensure there is a blank line before every list.",
+        },
       ],
-      max_tokens: 150,
-      temperature: 0.8,
+      max_tokens: 500,
+      temperature: 0.7,
     }),
   });
 
@@ -61,11 +87,15 @@ Remember: You're here to entertain while being helpful. Make every response memo
   const data = await response.json();
   let reply = data.choices?.[0]?.message?.content?.trim() || "⚠️ Oops, my wit seems to have taken a coffee break!";
 
-  // Clean up any unwanted formatting
+  // Clean up any unwanted formatting and enforce specific Markdown rules
   reply = reply
     .replace(/<think>[\s\S]*?<\/think>/gi, "")
     .replace(/^Okay.*?(response\.)?/i, "")
     .replace(/^["']|["']$/g, "") // Remove quotes from start and end
+    // Force "Fake Lists" (lines starting with **Text**:) to be real lists
+    .replace(/(^|\n)(?!\s*-)(\s*\*\*.*?\*\*[:?])/g, "$1- $2")
+    // Ensure 3 blank lines before every header for "Big Spacing"
+    .replace(/(^|\n)(?<!\n\n\n)(###+)/g, "\n\n\n$2")
     .trim();
 
   return reply;
@@ -127,10 +157,10 @@ export const getRecentChatHistory = async (userId: string, limitCount: number = 
       orderBy('timestamp', 'desc'),
       limit(limitCount)
     );
-    
+
     const querySnapshot = await getDocs(q);
     const messages: ChatMessage[] = [];
-    
+
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       messages.push({
@@ -141,7 +171,7 @@ export const getRecentChatHistory = async (userId: string, limitCount: number = 
         userId: data.userId
       });
     });
-    
+
     return messages.reverse(); // Return in chronological order
   } catch (error) {
     console.error('Error getting chat history:', error);

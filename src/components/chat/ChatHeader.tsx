@@ -1,5 +1,6 @@
 import { LogOut, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface ChatHeaderProps {
   onLogout: () => void;
@@ -13,11 +14,13 @@ const ChatHeader = ({ onLogout, onLogin, userEmail, isAuthenticated }: ChatHeade
     <header className="border-b border-border bg-card/50 backdrop-blur-sm safe-area-pt">
       <div className="container mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-xl sm:text-2xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Banter AI
-          </h1>
+          <Link to="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+            <h1 className="text-xl sm:text-2xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Banter AI
+            </h1>
+          </Link>
         </div>
-        
+
         <div className="flex items-center gap-2 sm:gap-4">
           {isAuthenticated && userEmail && (
             <span className="text-xs sm:text-sm text-muted-foreground hidden sm:inline">

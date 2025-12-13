@@ -14,7 +14,7 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || disabled) return;
-    
+
     onSendMessage(input);
     setInput("");
   };
@@ -42,15 +42,14 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
                 rows={1}
               />
             </div>
-            
+
             <Button
               type="submit"
               size="icon"
-              variant="ghost"
               disabled={!input.trim() || disabled}
-              className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 hover:bg-transparent"
+              className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 rounded-full bg-primary hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
             >
-              <Send className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+              <Send className="h-5 w-5 sm:h-6 sm:w-6 text-black fill-black" />
             </Button>
           </div>
         </form>

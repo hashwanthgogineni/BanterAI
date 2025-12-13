@@ -2,25 +2,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "firebase/auth";
 import { logout } from "@/integrations/firebase/auth";
-import { 
-  queryDeepSeek, 
-  generateLocalResponse, 
-  saveUserPrompt, 
+import {
+  queryDeepSeek,
+  generateLocalResponse,
+  saveUserPrompt,
   saveChatMessage,
   getRecentChatHistory,
-  ChatMessage 
+  ChatMessage
 } from "@/services/chatService";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatMessages from "@/components/chat/ChatMessages";
 import ChatInput from "@/components/chat/ChatInput";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 // Use the ChatMessage interface from chatService
 export type Message = ChatMessage;
 
 const Chat = () => {
-  // Remove authentication completely - no auth hooks
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Chat = () => {
 
   const loadChatHistory = async () => {
     if (!user) return;
-    
+
     try {
       const history = await getRecentChatHistory(user.uid, 20);
       setMessages(history);
@@ -58,14 +58,14 @@ const Chat = () => {
 
     // Add user message to UI immediately
     setMessages((prev) => [...prev, userMessage]);
-    
+
     // Save user prompt for learning (only if user is authenticated)
     if (user) {
       await saveUserPrompt(user.uid, content.trim());
       // Save user message to Firestore
       await saveChatMessage(user.uid, userMessage);
     }
-    
+
     setLoading(true);
 
     try {
@@ -82,18 +82,18 @@ const Chat = () => {
 
       // Add assistant message to UI
       setMessages((prev) => [...prev, assistantMessage]);
-      
+
       // Save assistant message to Firestore (only if user is authenticated)
       if (user) {
         await saveChatMessage(user.uid, assistantMessage);
       }
-      
+
     } catch (error: any) {
       console.error("DeepSeek call failed:", error);
-      
+
       // Fallback to local response
       const fallbackReply = generateLocalResponse(content.trim());
-      
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
@@ -107,7 +107,7 @@ const Chat = () => {
       if (user) {
         await saveChatMessage(user.uid, assistantMessage);
       }
-      
+
       toast({
         title: "Connection Issue",
         description: "Using offline mode - my wit is still sharp! 😏",
@@ -120,7 +120,7 @@ const Chat = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/auth");
+    navigate("/");
   };
 
   const handleLogin = () => {
@@ -131,13 +131,13 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col h-screen mobile-chat-container">
-      <ChatHeader 
-        onLogout={handleLogout} 
+      <ChatHeader
+        onLogout={handleLogout}
         onLogin={handleLogin}
-        userEmail={null} 
-        isAuthenticated={false}
+        userEmail={user?.email}
+        isAuthenticated={!!user}
       />
-      
+
       <div className="flex-1 overflow-hidden">
         <ChatMessages messages={messages} loading={loading} />
       </div>

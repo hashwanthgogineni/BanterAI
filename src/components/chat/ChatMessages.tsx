@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Message } from "@/pages/Chat";
 import { Bot, User } from "lucide-react";
 
@@ -39,31 +41,34 @@ const ChatMessages = ({ messages, loading }: ChatMessagesProps) => {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex gap-2 sm:gap-4 ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
+            className={`flex gap-2 sm:gap-4 ${message.role === "user" ? "justify-end" : "justify-start"
+              }`}
           >
             {message.role === "assistant" && (
               <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-black" />
               </div>
             )}
-            
+
             <div
-              className={`max-w-[85%] sm:max-w-[80%] ${
-                message.role === "user"
-                  ? "text-primary"
-                  : "text-foreground"
-              }`}
+              className={`max-w-[85%] sm:max-w-[80%] overflow-hidden ${message.role === "user"
+                ? "text-primary"
+                : "text-foreground"
+                }`}
             >
-              <p className="text-sm sm:text-sm leading-relaxed whitespace-pre-wrap break-words">
-                {message.content}
-              </p>
+              <div className={`text-sm sm:text-base leading-loose prose prose-sm max-w-none break-words ${message.role === "user"
+                ? "prose-invert prose-p:text-primary prose-a:text-primary underline-offset-4 prose-p:mb-4 prose-ul:my-4 prose-li:my-2 prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-primary prose-ul:ml-4 prose-ol:ml-4"
+                : "dark:prose-invert prose-p:text-foreground prose-strong:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-li:text-foreground prose-p:mb-6 prose-ul:my-6 prose-li:mb-3 prose-headings:mb-6 prose-headings:mt-12 prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-foreground prose-ul:ml-4 prose-ol:ml-4"
+                }`}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {message.content}
+                </ReactMarkdown>
+              </div>
             </div>
 
             {message.role === "user" && (
               <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary flex items-center justify-center">
-                <User className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                <User className="h-4 w-4 sm:h-5 sm:w-5 text-black" />
               </div>
             )}
           </div>
@@ -72,7 +77,7 @@ const ChatMessages = ({ messages, loading }: ChatMessagesProps) => {
         {loading && (
           <div className="flex gap-2 sm:gap-4 justify-start">
             <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              <Bot className="h-4 w-4 sm:h-5 sm:w-5 text-black" />
             </div>
             <div className="max-w-[85%] sm:max-w-[80%]">
               <div className="flex items-center gap-2">

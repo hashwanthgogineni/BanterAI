@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signIn, signUp, signInWithGoogle } from "@/integrations/firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,7 @@ const Auth = () => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate input
     const result = authSchema.safeParse({ email, password });
     if (!result.success) {
@@ -39,7 +39,7 @@ const Auth = () => {
     try {
       if (isLogin) {
         await signIn(email.trim(), password);
-        
+
         toast({
           title: "Welcome back!",
           description: "Successfully logged in",
@@ -47,7 +47,7 @@ const Auth = () => {
         navigate("/chat");
       } else {
         await signUp(email.trim(), password);
-        
+
         toast({
           title: "Account created!",
           description: "You can now log in",
@@ -67,10 +67,10 @@ const Auth = () => {
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
-    
+
     try {
       await signInWithGoogle();
-      
+
       toast({
         title: "Welcome!",
         description: "Successfully signed in with Google",
@@ -95,9 +95,11 @@ const Auth = () => {
         <div className="w-full max-w-md space-y-8">
           <div className="space-y-2">
             <div className="flex justify-center mb-6">
-              <h1 className="text-4xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Banter AI
-              </h1>
+              <Link to="/" className="cursor-pointer hover:opacity-80 transition-opacity">
+                <h1 className="text-4xl font-banter font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Banter AI
+                </h1>
+              </Link>
             </div>
             <h2 className="text-3xl font-bold tracking-tight text-center">
               {isLogin ? "Log in" : "Sign up"}
